@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Programming Language Company Dashboard</title>
+
+<!-- Bootstrap -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- icon footer -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: linear-gradient(135deg, #111, #2c2c2c, #f5f5f5);
+    font-family: 'Segoe UI', sans-serif;
+    transition: 0.4s;
+}
+
+/* Dark Mode */
+.dark-mode {
+    background: #111 !important;
+    color: white !important;
+}
+
+.navbar {
+    backdrop-filter: blur(10px);
+    background: rgba(0,0,0,0.8) !important;
+}
+
+.section {
+    padding: 100px 0;
+}
+
+.card-custom {
+    background: rgba(255,255,255,0.9);
+    border-radius: 15px;
+    border: none;
+    transition: 0.3s;
+}
+
+.card-custom:hover {
+    transform: translateY(-6px);
+    box-shadow: 0px 10px 25px rgba(0,0,0,0.3);
+}
+
+footer {
+    background: #111;
+    color: white;
+    padding: 20px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+<div class="container">
+    <img src="logo-fs.png" alt="FS Logo" width="55" height="45" class="me-2">
+<a class="navbar-brand fw-bold" href="#">Fakhri Shiddiq Rizkillah</a>
+
+<button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#menu">
+<span class="navbar-toggler-icon"></span>
+</button>
+
+<div class="collapse navbar-collapse m-3" id="menu">
+<ul class="navbar-nav ms-auto">
+<li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+<li class="nav-item"><a class="nav-link" href="#tools">Tools</a></li>
+<li class="nav-item"><a class="nav-link" href="#stats">Statistics</a></li>
+<li class="nav-item">
+<button class="btn btn-outline-light btn-sm ms-3" onclick="toggleDark()">🌙</button>
+</li>
+<li class="nav-item">
+  <a href="login.html" 
+     class="btn btn-outline-light btn-sm ms-2"
+     style="border-color:#666; color:#ccc;">
+     Logout
+  </a>
+</li>
+</ul>
+</div>
+</div>
+</nav>
+
+<!-- HERO -->
+<section class="section text-center text-white">
+<div class="container">
+<h1 class="fw-bold">Programming Language Project</h1>
+<p>Corporate Web Application Simulation</p>
+</div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="section">
+<div class="container">
+<div class="card card-custom p-5">
+<p>
+    Programming language (bahasa pemrograman) adalah sistem bahasa formal yang digunakan untuk memberi instruksi kepada komputer agar menjalankan tugas tertentu. Bahasa ini menjadi “jembatan komunikasi” antara manusia dan mesin, karena komputer pada dasarnya hanya memahami sinyal biner (0 dan 1), sementara manusia berpikir menggunakan logika dan bahasa yang lebih kompleks.
+    Dengan bahasa pemrograman, seorang programmer dapat menuliskan serangkaian perintah, aturan, dan logika yang kemudian diterjemahkan oleh komputer menjadi aksi nyata, seperti menampilkan halaman website, mengolah data, menjalankan aplikasi, atau bahkan mengontrol perangkat keras.
+</p>
+</div>
+</div>
+</section>
+
+<!-- TOOLS -->
+<section id="tools" class="section bg-light">
+<div class="container">
+
+<div class="row g-4">
+
+<!-- SAPA -->
+<div class="col-md-6">
+<div class="card card-custom p-4">
+<h5>Nama Mahasiswa</h5>
+<input type="text" id="nama" class="form-control mb-3" placeholder="Masukkan nama">
+<button class="btn btn-dark w-100" onclick="sapa()">Submit</button>
+</div>
+</div>
+
+<!-- KALKULATOR -->
+<div class="col-md-6">
+<div class="card card-custom p-4">
+<h5>Kalkulator</h5>
+<input type="number" id="a" class="form-control mb-2" placeholder="Angka pertama">
+<input type="number" id="b" class="form-control mb-3" placeholder="Angka kedua">
+<button class="btn btn-secondary w-100 mb-3" onclick="hitung()">Hitung</button>
+<div id="hasil"></div>
+</div>
+</div>
+
+<!-- KELULUSAN -->
+<div class="col-md-6">
+<div class="card card-custom p-4">
+<h5>Status Kelulusan</h5>
+<input type="number" id="nilaiLulus" class="form-control mb-3" placeholder="Masukkan nilai">
+<button class="btn btn-dark w-100 mb-3" onclick="cek()">Cek</button>
+<div id="status"></div>
+</div>
+</div>
+
+<!-- KONVERSI -->
+<div class="col-md-6">
+<div class="card card-custom p-4">
+<h5>Konversi Nilai</h5>
+<input type="number" id="nilaiHuruf" class="form-control mb-3" placeholder="Masukkan nilai 0-100">
+<button class="btn btn-secondary w-100 mb-3" onclick="konversi()">Konversi</button>
+<div id="huruf"></div>
+</div>
+</div>
+
+</div>
+</div>
+</section>
+
+<!-- STATISTICS -->
+<section id="stats" class="section">
+<div class="container">
+<div class="card card-custom p-5">
+<h3 class="mb-4">Statistik Nilai Mahasiswa</h3>
+<canvas id="chartNilai"></canvas>
+</div>
+</div>
+</section>
+
+<footer style="
+  background: linear-gradient(to right, #000000, #0d0d0d, #141414, #1a1a1a);
+  color: #e5e5e5;
+  padding: 60px 0 20px 0;
+  margin-top: 0;
+  font-family: Arial, sans-serif;
+  border-top: 1px solid #222;
+">
+  <div style="width:90%; max-width:1200px; margin:auto;">
+    
+    <!-- Top Footer -->
+    <div style="display:flex; flex-wrap:wrap; justify-content:space-between; gap:40px;">
+      
+      <!-- About -->
+      <div style="flex:1; min-width:250px;">
+        <h3 style="margin-bottom:15px; font-weight:600;">Programming Language</h3>
+        <p style="color:#d1d5db; line-height:1.7;">
+          Website edukasi dan informasi seputar dunia programming, 
+          teknologi, dan pengembangan software modern.
+        </p>
+        <p style="margin-top:12px; color:#9ca3af;">
+          Fakhri Shiddiq Rizkillah <br>
+          11525017 | Sistem Informasi
+        </p>
+      </div>
+
+      <!-- Quick Links -->
+      <div style="flex:1; min-width:200px;">
+        <h4 style="margin-bottom:15px;">Quick Links</h4>
+        <ul style="list-style:none; padding:0; line-height:2.2;">
+          <li><a href="#about" style="color:#d1d5db; text-decoration:none;">About</a></li>
+          <li><a href="#tools" style="color:#d1d5db; text-decoration:none;">Tools</a></li>
+          <li><a href="#stats" style="color:#d1d5db; text-decoration:none;">Statistics</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact -->
+      <div style="flex:1; min-width:250px;">
+        <h4 style="margin-bottom:15px;">Contact</h4>
+        
+        <p style="margin:10px 0;">
+          <i class="fa-solid fa-envelope"></i>
+          <span style="margin-left:10px;">fakhrishiddiq43@gmail.com</span>
+        </p>
+
+        <p style="margin:10px 0;">
+          <i class="fa-solid fa-phone"></i>
+          <span style="margin-left:10px;">+62 857-7391-8581</span>
+        </p>
+
+        <p style="margin:10px 0;">
+          <i class="fa-solid fa-location-dot"></i>
+          <span style="margin-left:10px;">Ciawi, Bogor, Indonesia</span>
+        </p>
+      </div>
+
+      <!-- Social -->
+    <div style="flex:1; min-width:200px;">
+        <h4 style="margin-bottom:15px;">Follow Us</h4>
+
+        <p style="margin:10px 0;">
+            <a href="https://instagram.com/fchrxxn_" target="_blank" 
+            style="color:#d1d1d1; text-decoration:none; display:inline-flex; align-items:center; transition:0.3s;">
+            <i class="fa-brands fa-instagram"></i>
+            <span style="margin-left:10px;">Instagram</span>
+            </a>
+        </p>
+
+        <p style="margin:10px 0;">
+            <a href="https://www.linkedin.com/in/fakhri-shiddiq-rizkillah-14242a2a3/" target="_blank" 
+            style="color:#d1d1d1; text-decoration:none; display:inline-flex; align-items:center; transition:0.3s;">
+            <i class="fa-brands fa-linkedin"></i>
+            <span style="margin-left:10px;">LinkedIn</span>
+            </a>
+        </p>
+
+        <p style="margin:10px 0;">
+            <a href="https://github.com/fakhri0307" target="_blank" 
+            style="color:#d1d1d1; text-decoration:none; display:inline-flex; align-items:center; transition:0.3s;">
+            <i class="fa-brands fa-github"></i>
+            <span style="margin-left:10px;">GitHub</span>
+            </a>
+        </p>
+    </div>
+
+    </div>
+
+    <!-- Divider -->
+    <hr style="margin:50px 0 20px 0; border:0.5px solid #555;">
+
+    <!-- Bottom -->
+    <div style="text-align:center; color:#b0b0b0; font-size:14px;">
+      © 2026 Programming Language Company. All Rights Reserved. <br>
+      Designed & Developed by Fakhri Shiddiq Rizkillah
+    </div>
+
+  </div>
+</footer>
+
+<script>
+
+// DARK MODE
+function toggleDark(){
+    document.body.classList.toggle("dark-mode");
+}
+
+// SAPA
+function sapa(){
+    let nama = document.getElementById("nama").value;
+    if(nama.trim()===""){
+        alert("Nama tidak boleh kosong");
+    } else {
+        alert("Halo " + nama + ", selamat belajar JavaScript!");
+    }
+}
+
+// KALKULATOR
+function hitung(){
+    let a = parseFloat(document.getElementById("a").value);
+    let b = parseFloat(document.getElementById("b").value);
+    let hasil = document.getElementById("hasil");
+
+    if(isNaN(a)||isNaN(b)){
+        hasil.innerHTML='<div class="alert alert-danger">Input tidak valid</div>';
+        return;
+    }
+
+    hasil.innerHTML=`
+    <div class="alert alert-dark">
+    + : ${a+b} <br>
+    - : ${a-b} <br>
+    × : ${a*b} <br>
+    ÷ : ${b!=0 ? a/b : "Tidak bisa dibagi 0"}
+    </div>`;
+}
+
+// KELULUSAN
+function cek(){
+    let nilai=parseFloat(document.getElementById("nilaiLulus").value);
+    let status=document.getElementById("status");
+
+    if(isNaN(nilai)){
+        status.innerHTML='<div class="alert alert-danger">Nilai tidak valid</div>';
+        return;
+    }
+
+    status.innerHTML=nilai>=75?
+    '<div class="alert alert-success">LULUS</div>':
+    '<div class="alert alert-danger">TIDAK LULUS</div>';
+}
+
+// KONVERSI
+function konversi(){
+    let nilai=parseFloat(document.getElementById("nilaiHuruf").value);
+    let huruf;
+    let h=document.getElementById("huruf");
+
+    if(isNaN(nilai)){
+        h.innerHTML='<div class="alert alert-danger">Nilai tidak valid</div>';
+        return;
+    }
+
+    if(nilai>=85) huruf="A";
+    else if(nilai>=75) huruf="B";
+    else if(nilai>=65) huruf="C";
+    else if(nilai>=50) huruf="D";
+    else huruf="E";
+
+    h.innerHTML=`<div class="alert alert-secondary">
+    Nilai: ${nilai} <br> Huruf: ${huruf}
+    </div>`;
+}
+
+// CHART
+const ctx=document.getElementById('chartNilai');
+new Chart(ctx,{
+    type:'bar',
+    data:{
+        labels:['A','B','C','D','E'],
+        datasets:[{
+            label:'Jumlah Mahasiswa',
+            data:[12,19,8,5,3],
+            backgroundColor:[
+                '#111','#444','#777','#aaa','#ddd'
+            ]
+        }]
+    }
+});
+
+</script>
+
+</body>
+</html>
